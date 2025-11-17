@@ -17,6 +17,8 @@ model User {
   password  String
   role      UserRole  @default(BUYER)
   projects  Project[] @relation("UserProjects")
+  buyerTransactions Transaction[] @relation("BuyerTransactions")
+  sellerTransactions Transaction[] @relation("SellerTransactions")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   
@@ -27,10 +29,31 @@ model Project {
   id          String   @id @default(uuid())
   name        String
   description String?
+  transactions Transaction[]
   createdBy   User     @relation("UserProjects", fields: [createdById], references: [id])
   createdById String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String
+  buyer     User     @relation("BuyerTransactions", fields: [buyerId], references: [id])
+  buyerId   String
+  seller    User     @relation("SellerTransactions", fields: [sellerId], references: [id])
+  sellerId  String
+  amount    Float
+  status    TransactionStatus @default(PENDING)
+  createdAt DateTime @default(now())
+}
+
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
 }
 
 enum UserRole {
