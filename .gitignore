@@ -1,0 +1,78 @@
+# -----------------------------
+# Node & Workspaces
+# -----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.tmp/
+
+# Workspace dependencies symlinks
+backend/node_modules/
+mobile/node_modules/
+
+# -----------------------------
+# Environment Variables
+# -----------------------------
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+
+# -----------------------------
+# Prisma
+# -----------------------------
+backend/prisma/migrations/*/schema.prisma
+backend/prisma/dev.db
+backend/prisma/*.db-journal
+
+# -----------------------------
+# TypeScript
+# -----------------------------
+*.tsbuildinfo
+
+# -----------------------------
+# Expo / React Native
+# -----------------------------
+.expo/
+.expo-shared/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.pem
+*.orig
+
+# metro cache
+.metro/
+
+# iOS
+ios/Pods/
+ios/build/
+*.xcworkspace
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcodeproj/project.xcworkspace/xcshareddata/
+*.xcodeproj/xcuserdata/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+*.keystore
+*.hprof
+
+# -----------------------------
+# OS files
+# -----------------------------
+.DS_Store
+Thumbs.db
