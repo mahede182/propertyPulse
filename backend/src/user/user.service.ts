@@ -4,6 +4,7 @@ import { Prisma, User } from "@prisma/client";
 import { UserDto } from "./dto";
 import { plainToInstance } from "class-transformer";
 import { createCustomError } from "src/common/utils/helpers";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService {
@@ -46,8 +47,12 @@ export class UserService {
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
     this.logger.log("createUser");
     try {
+      const hashedPassword = await bcrypt.hash(data.password, 10);
       const createUser = await this.prisma.user.create({
-        data,
+        data: {
+          ...data,
+          password: hashedPassword,
+        },
       });
       return createUser;
     } catch (e) {

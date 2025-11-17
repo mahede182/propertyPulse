@@ -10,7 +10,10 @@ import {
 import { Project as ProjectModel } from "@prisma/client";
 import { CreateProjectDto } from "./dto";
 import { ProjectService } from "./project.service";
+import { UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from "src/common/utils/jwt-auth.guard";
 
+@UseGuards(JwtAuthGuard)
 @Controller("projects")
 export class PostController {
   constructor(private readonly postService: ProjectService) {}
