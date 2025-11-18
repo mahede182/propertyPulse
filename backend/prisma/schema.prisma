@@ -19,6 +19,8 @@ model User {
   projects  Project[] @relation("UserProjects")
   buyerTransactions Transaction[] @relation("BuyerTransactions")
   sellerTransactions Transaction[] @relation("SellerTransactions")
+  chats     Chat[]    @relation("ChatParticipants")
+  sentMessages Message[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   
@@ -34,6 +36,26 @@ model Project {
   createdById String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Chat {
+  id        String    @id @default(uuid())
+  participants User[]  @relation("ChatParticipants")
+  messages   Message[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  chatId    String
+  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  String
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([chatId])
 }
 
 model Transaction {
