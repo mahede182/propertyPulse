@@ -35,6 +35,15 @@ export class ProjectController {
     return this.projectService.getProjects(userId);
   }
 
+  @Get(':id')
+  async findOne(
+    @Param('id') id: string,
+    @Req() req: RequestWithUser,
+  ): Promise<ProjectResponseDto> {
+    const userId = req.user.id;
+    return this.projectService.getProjectById(id, userId);
+  }
+
   @Put(":id")
   async updateProject(@Param("id") id: string): Promise<ProjectModel> {
     return this.projectService.updateProject({

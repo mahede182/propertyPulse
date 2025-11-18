@@ -1,0 +1,30 @@
+export default {
+  primary: '#4FBCB6',
+  secondary: '#ABDBE1',
+  success: '#28A745',
+  danger: '#DC3545',
+  warning: '#FFC107',
+  info: '#17A2B8',
+  light: '#F8F9FA',
+  dark: '#343A40',
+  white: '#FFFFFF',
+  black: '#000000',
+  border: '#E9ECEF',
+  text: {
+    primary: '#24285B',
+    secondary: '#6C757D',
+    light: '#F8F9FA',
+    muted: '#B9BABE',
+  },
+  background: '#F9F9F9',
+  card: '#FFFFFF',
+  input: {
+    background: '#FFFFFF',
+    border: '#CED4DA',
+    placeholder: '#6C757D',
+  },
+  button: {
+    primary: '#2FB9B2',
+    text: '#FFFFFF',
+  },
+};

@@ -13,7 +13,7 @@ export function useLanguage() {
   }, []);
 
   return {
-    currentLanguage,
+  currentLanguage,
     changeLanguage,
     t,
   };

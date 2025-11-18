@@ -37,27 +37,56 @@ export class ProjectService {
     return project;
   }
 
+  async getProjectById(
+    projectId: string,
+    userId: string,
+  ): Promise<ProjectResponseDto> {
+    try {
+      const project = await this.prisma.project.findUnique({
+        where: { id: projectId, createdById: userId },
+        include: {
+          createdBy: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      });
+
+      if (!project) {
+        throw createCustomError('Project not found', HttpStatus.NOT_FOUND);
+      }
+
+      return plainToInstance(ProjectResponseDto, project);
+    } catch (error) {
+      this.logger.error(`Error fetching project ${projectId}: ${error.message}`, error.stack);
+      throw error;
+    }
+  }
+
   async getProjects(userId: string): Promise<ProjectResponseDto[]> {
-  const projects = await this.prisma.project.findMany({
-    where: {
-      createdById: userId,
-    },
-    include: {
-      createdBy: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
+    const projects = await this.prisma.project.findMany({
+      where: {
+        createdById: userId,
+      },
+      include: {
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
         },
       },
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
-  return projects.map(project => plainToInstance(ProjectResponseDto, project));
-}
+    return projects.map(project => plainToInstance(ProjectResponseDto, project));
+  }
 
   async updateProject(params: {
     where: Prisma.ProjectWhereUniqueInput;
